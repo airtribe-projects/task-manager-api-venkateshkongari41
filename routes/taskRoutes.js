@@ -14,9 +14,10 @@ router.get("/:id", (req, res, next) => {
   try {
     const task = tasks.find((t) => t.id === req.params.id);
     if (!task) {
-      const error = new Error("Task not found");
-      error.statusCode = 404;
-      return next(error);
+      return res.status(404).json({
+        success: false,
+        message: "Task not found",
+      });
     }
     res.json(task);
   } catch (error) {
@@ -29,11 +30,10 @@ router.post("/", (req, res, next) => {
     const { title, description } = req.body;
     console.log("Creating task:", title);
     console.log("Description:", description);
-    if (!title) {
+    if (!title || !description) {
       return res.status(400).json({
         success: false,
-        message: "Title is required",
-        error: err.message,
+        message: "Both Title and Description are required",
       });
     }
     const newId =
@@ -55,9 +55,10 @@ router.put("/:id", (req, res, next) => {
   try {
     const taskIndex = tasks.findIndex((t) => t.id == req.params.id);
     if (taskIndex === -1) {
-      const error = new Error("Task not found");
-      error.statusCode = 404;
-      return next(error);
+      return res.status(404).json({
+        success: false,
+        message: "Task not found",
+      });
     }
     const { title, description, completed } = req.body;
     if (title !== undefined) tasks[taskIndex].title = title;
@@ -73,9 +74,10 @@ router.delete("/:id", (req, res, next) => {
   try {
     const taskIndex = tasks.findIndex((t) => t.id == req.params.id);
     if (taskIndex === -1) {
-      const error = new Error("Task not found");
-      error.statusCode = 404;
-      return next(error);
+      return res.status(404).json({
+        success: false,
+        message: "Task not found",
+      });
     }
     tasks.splice(taskIndex, 1);
     res.status(204).send();
