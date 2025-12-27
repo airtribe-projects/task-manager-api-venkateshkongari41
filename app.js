@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 });
 
 const routes = require("./routes/taskRoutes");
-app.use("/", routes);
+app.use("/tasks", routes);
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Server listening on ${port}`);
