@@ -21,8 +21,8 @@ app.use((req, res, next) => {
 const routes = require("./routes/taskRoutes");
 app.use("/", routes);
 
-app.listen(3000, "0.0.0.0", () => {
-  console.log("Server listening on 3000");
+app.listen(port, "0.0.0.0", () => {
+  console.log(`Server listening on ${port}`);
 });
 
 module.exports = app;
